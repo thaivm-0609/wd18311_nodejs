@@ -8,15 +8,31 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 //router: tạo ra 2 trang, 1 là trang danh sách, 2 là trang tạo mới
-app.get('/list/:id', (req,res,next) => {
+app.get('/list', (req,res,next) => {
     //req.params: nằm trong url
     //req.query: ngăn cách bằng dấu ?query1=x&query2=y
     //req.body
-    res.render('list', 
+    let products = [
         {
-            idSp: req.params.id,
-            nameSp: 'thaivm2',
-        });
+            id: 1,
+            name: 'thaivm2',
+            price: 100000,
+            images: 'https://picsum.photos/100'
+        },
+        {
+            id: 2,
+            name: 'thaivm22',
+            price: 300000,
+            images: 'https://picsum.photos/100'
+        },
+        {
+            id: 3,
+            name: 'thaivm23',
+            price: 200000,
+            images: 'https://picsum.photos/100'
+        }
+    ];
+    res.render('list', { pros:products });
 });
 
 app.get('/create', (req,res,next) => {

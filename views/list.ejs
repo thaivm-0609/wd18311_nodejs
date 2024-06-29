@@ -7,7 +7,35 @@
 </head>
 <body>
     <h1>Đây là trang danh sách</h1>
-    <h1>ID của sản phẩm là <%=idSp%> </h1>
-    <h1>Tên của sản phẩm là <%=nameSp%> </h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- forEach -->
+            <!-- <% pros.forEach((p) => { %>
+                <tr>
+                    <td><%= p.id %></td>
+                    <td><%= p.name %></td>
+                    <td><%= p.price %></td>
+                    <td><img src="<%=p.images%>" alt=""></td>
+                </tr>
+            <% }) %> -->
+            <!-- for -->
+            <% for(let p of pros) { %>
+                <tr>
+                    <td><%= p.id %></td>
+                    <td><%= p.name %></td>
+                    <td><%= p.price %></td>
+                    <td><img src="<%=p.images%>" alt=""></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
 </body>
 </html>
