@@ -7,6 +7,7 @@
 </head>
 <body>
     <h1>Đây là trang danh sách</h1>
+    <a href="/create">Thêm mới</a>
     <table>
         <thead>
             <tr>
@@ -14,6 +15,7 @@
                 <th>Name</th>
                 <th>Price</th>
                 <th>Image</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -33,6 +35,10 @@
                     <td><%= p.name %></td>
                     <td><%= p.price %></td>
                     <td><img style="height: 100px;" src="images/<%=p.image%>" alt=""></td>
+                    <td>
+                        <a href="/edit/<%=p.id%>">Edit</a>
+                        <a href="">Delete</a>
+                    </td>
                 </tr>
             <% } %>
         </tbody>

@@ -3,25 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm mới</title>
+    <title>Edit</title>
 </head>
 <body>
     <form 
-        action="/save" 
+        action="/update" 
         method="POST" 
         enctype="multipart/form-data"
     >
         <div>
             <label for="">Name</label>
-            <input type="text" name="name">
+            <input type="text" name="name" value="<%=product.name %>">
         </div>
         <div>
             <label for="">Price</label>
-            <input type="number" name="price">
+            <input type="number" name="price" value="<%=product.price %>">
         </div>
         <div>
             <label for="">Image</label>
             <input type="file" name="image">
+            <% if (product.image) { %> 
+                <img src="/images/<%=product.image%>" alt="">
+            <% } %>
         </div>
         <input type="submit" value="Save">
     </form>

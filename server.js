@@ -41,13 +41,61 @@ app.get('/list', (req,res,next) => {
     let sql = 'SELECT * FROM products'; //khai báo câu truy vấn
     db.query(sql, (err,data) => { //thực thi câu truy vấn
         if (err) throw err
-
         res.render('list', { pros: data }); //trả data về giao diện list.ejs
     })
 });
 
 app.get('/create', (req,res,next) => {
     res.render('create');
+})
+
+app.post('/save', upload.single('image'), (req,res) => {
+    var newProduct = {
+        name: req.body.name,
+        price: req.body.price,
+        image: req.file.filename
+    }
+
+    db.query('INSERT INTO products SET ?',newProduct, (err,data) => {
+        if (err) throw err
+        console.log('Create successfully');
+        res.redirect('/list');
+    })
+    //lấy giá trị a,b,c người dùng nhập qua form
+    // var a = req.body.a;
+    // var b = req.body.b;
+    // var c = req.body.c;
+
+    // if (a == 0) {
+    //     if (b == 0) {
+    //         if (c == 0) {
+    //             res.send('PT có vô số nghiệm');
+    //         } else {
+    //             res.send('PT vô nghiệm');
+    //         }
+    //     } else {
+    //         res.send(`PT có 1 nghiệm là x = ${-c/b}`)
+    //     }
+    // } else {
+    //     var delta = b*b-4*a*c;
+    //     if (delta < 0) {
+    //         res.send('PT vô nghiệm');
+    //     } else if (delta == 0) {
+    //         res.send(`PT có 2 nghiệm kép x1=x2=${-b/(2*a)}`);
+    //     } else {
+    //         var x1= (-b - Math.sqrt(delta))/(2*a);
+    //         var x2= (-b + Math.sqrt(delta))/(2*a);
+    //         res.send(`PT có 2 nghiệm phân biệt x1=${x1} và x2=${x2}`);
+    //     }
+    // }
+})
+
+app.get('/edit/:id', (req,res) => {
+    var id = req.params.id;
+    db.query('SELECT * FROM products WHERE id=?',id, (err,data) => {
+        if (err) throw err
+        res.render('edit', { product: data[0]});
+    })
 })
 
 //router upload file ảnh
@@ -66,36 +114,6 @@ app.get('/delete', (req,res) => {
         })
     }
 });
-
-app.post('/save', (req,res) => {
-    //lấy giá trị a,b,c người dùng nhập qua form
-    var a = req.body.a;
-    var b = req.body.b;
-    var c = req.body.c;
-
-    if (a == 0) {
-        if (b == 0) {
-            if (c == 0) {
-                res.send('PT có vô số nghiệm');
-            } else {
-                res.send('PT vô nghiệm');
-            }
-        } else {
-            res.send(`PT có 1 nghiệm là x = ${-c/b}`)
-        }
-    } else {
-        var delta = b*b-4*a*c;
-        if (delta < 0) {
-            res.send('PT vô nghiệm');
-        } else if (delta == 0) {
-            res.send(`PT có 2 nghiệm kép x1=x2=${-b/(2*a)}`);
-        } else {
-            var x1= (-b - Math.sqrt(delta))/(2*a);
-            var x2= (-b + Math.sqrt(delta))/(2*a);
-            res.send(`PT có 2 nghiệm phân biệt x1=${x1} và x2=${x2}`);
-        }
-    }
-})
 
 app.listen(port, () => {
     console.log(`SV dang chay o port ${port}`);
