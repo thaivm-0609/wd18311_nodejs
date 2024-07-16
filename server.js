@@ -50,12 +50,14 @@ app.get('/create', (req,res,next) => {
 })
 
 app.post('/save', upload.single('image'), (req,res) => {
+    //lấy dữ liệu ng dùng nhập vao form
     var newProduct = {
         name: req.body.name,
         price: req.body.price,
         image: req.file.filename
     }
 
+    //truy vấn
     db.query('INSERT INTO products SET ?',newProduct, (err,data) => {
         if (err) throw err
         console.log('Create successfully');
@@ -95,6 +97,33 @@ app.get('/edit/:id', (req,res) => {
     db.query('SELECT * FROM products WHERE id=?',id, (err,data) => {
         if (err) throw err
         res.render('edit', { product: data[0]});
+    })
+})
+
+app.post('/update/:id', upload.single('image'), (req,res) => {
+    var id = req.params.id;
+    //lấy dữ liệu người dùng nhập vào form
+    var name = req.body.name;
+    var price = req.body.price;
+    var image = req.file.filename;
+
+    db.query(
+        'UPDATE products SET name=?,price=?,image=? WHERE id=?', 
+        [name,price,image,id], 
+        (err, data) => {
+            if (err) throw err
+            console.log('Updated successfully');
+            res.redirect('/list');
+    })
+})
+
+app.get('/delete/:id', (req,res) => {
+    var id = req.params.id;
+
+    db.query('DELETE FROM products WHERE id=?', [id], (err, data) => {
+        if (err) throw err
+        console.log('Delete success');
+        res.redirect('/list');
     })
 })
 

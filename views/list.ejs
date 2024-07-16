@@ -37,7 +37,7 @@
                     <td><img style="height: 100px;" src="images/<%=p.image%>" alt=""></td>
                     <td>
                         <a href="/edit/<%=p.id%>">Edit</a>
-                        <a href="">Delete</a>
+                        <a onclick="return confirm('Are you sure?')" href="/delete/<%=p.id%>">Delete</a>
                     </td>
                 </tr>
             <% } %>
