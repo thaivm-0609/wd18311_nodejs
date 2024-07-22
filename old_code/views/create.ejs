@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm mới</title>
+</head>
+<body>
+    <form 
+        action="/save" 
+        method="POST" 
+        enctype="multipart/form-data"
+    >
+        <div>
+            <label for="">Name</label>
+            <input type="text" name="name">
+        </div>
+        <div>
+            <label for="">Price</label>
+            <input type="number" name="price">
+        </div>
+        <div>
+            <label for="">Image</label>
+            <input type="file" name="image">
+        </div>
+        <input type="submit" value="Save">
+    </form>
+    <!-- giải PT bậc 2 -->
+    <!-- <form action="/save" method="POST">
+        <div>
+            <label for="">A</label>
+            <input type="text" name="a">
+        </div>
+        <div>
+            <label for="">B</label>
+            <input type="number" name="b">
+        </div>
+        <div>
+            <label for="">C</label>
+            <input type="number" name="c">
+        </div>
+        <input type="submit" value="Save">
+    </form> -->
+</body>
+</html>
