@@ -28,12 +28,20 @@ const upload = multer({ storage: storage });
 
 mongoose.connect('mongodb://127.0.0.1:27017/wd18411')
     .then(result => {
+        //router cho website
         app.get('/list', ProductController.getList);
         app.get('/create', ProductController.create);
         app.get('/edit/:id', ProductController.getDetail);
         app.post('/save',upload.single('image'), ProductController.save);
         app.post('/update/:id',upload.single('image'), ProductController.update);
         app.get('/delete/:id', ProductController.delete);
+
+        //router cho API
+        app.get('/products', ProductController.apiGetList);
+        app.get('/products/:id', ProductController.apiDetail);
+        app.post('/products',upload.single('image'), ProductController.apiCreate);
+        app.put('/products/:id',upload.single('image'), ProductController.apiUpdate);
+        app.delete('/products/:id', ProductController.apiDelete);
         app.listen(port, () => {
             console.log(`running in port ${port}`);
         })
