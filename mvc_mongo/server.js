@@ -4,6 +4,7 @@ const express = require('express'); //require module express
 // var bodyParser = require('body-parser'); //require body-parser
 const mongoose = require('mongoose'); //kết nối với mongodb
 const ProductController = require('./controllers/ProductController');
+const AuthController = require('./controllers/AuthController');
 var multer = require('multer'); //multer để upload file ảnh
 
 const app = new express();
@@ -38,10 +39,13 @@ mongoose.connect('mongodb://127.0.0.1:27017/wd18411')
 
         //router cho API
         app.get('/products', ProductController.apiGetList);
-        app.get('/products/:id', ProductController.apiDetail);
-        app.post('/products',upload.single('image'), ProductController.apiCreate);
-        app.put('/products/:id',upload.single('image'), ProductController.apiUpdate);
+        app.get('/products/:id', ProductController.apiGetDetail);
+        app.post('/products', upload.single('image'), ProductController.apiSave);
+        app.put('/products/:id', upload.single('image'), ProductController.apiUpdate);
         app.delete('/products/:id', ProductController.apiDelete);
+
+        //router for auth API
+        app.post('/register', AuthController.register);
         app.listen(port, () => {
             console.log(`running in port ${port}`);
         })

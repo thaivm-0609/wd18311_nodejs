@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/thaivm-0609/wd18311_nodejs#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "ejs": "^3.1.10",
     "express": "^4.19.2",

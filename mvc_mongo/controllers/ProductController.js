@@ -76,56 +76,57 @@ exports.apiGetList = async (req,res) => {
     }
 }
 
-
-exports.apiDetail = async (req,res) => {
+exports.apiGetDetail = async (req,res) => {
     try {
-        var product = await Product.findById(req.params.id);
-        res.status(200).json({ data: product })
-    } catch {
-        res.status(400).json({ message: 'Something went wrong'});
+        //lấy id từ request
+        var id = req.params.id;
+
+        //truy vấn lấy dữ liệu
+        var product = await Product.findById(id);
+        res.status(200).json({ data: product });
+    } catch (errors) {
+        res.status(400).json({ error: errors });
     }
 }
 
-exports.apiCreate = async (req,res) => {
+exports.apiSave = async (req,res) => {
     try {
-        //B1: lấy data ng dùng nhập vào form
+        //lấy data từ request
         var newProduct = {
             name: req.body.name,
             price: req.body.price,
-            description: req.body.description,
-            image: req.file.filename
+            image: req.file.filename,
         }
-        //B2: lưu data vào trong db
-        var product = await Product.create(newProduct);
-        if (product) {
-            res.status(200).json({ message: 'Create successfully', data: product })
-        }
-    } catch {
-        res.status(400).json({ message: 'Something went wrong'});
+        //lưu data vào trong database
+        await Product.create(newProduct);
+        res.status(201).json({
+            message: 'Thêm mới thành công'
+        })
+    } catch (errors) {
+        res.status(400).json({ error: errors });
     }
 }
 
 exports.apiUpdate = async (req,res) => {
     try {
-        //B1: lấy data ng dùng nhập vào form
-        var updateProduct = {
-            name: req.body.name,
-            price: req.body.price,
-            description: req.body.description,
-            image: req.file.filename
-        }
-        await Product.findByIdAndUpdate(req.params.id, updateProduct);
-        res.status(200).json({ message: 'Update successfully'});
-    } catch {
-        res.status(400).json({ message: 'Something went wrong'});
+        //lấy id
+        var id = req.params.id;
+        //thực hiện update
+        await Product.findByIdAndUpdate(id, req.body, {new: true});
+        res.status(200).json({ message: 'Update thành công' });
+    } catch (errors) {
+        res.status(400).json({ error: errors });
     }
 }
 
 exports.apiDelete = async (req,res) => {
     try {
-        await Product.findByIdAndDelete(req.params.id);
-        res.status(200).json({message: 'Delete successfully'})
-    } catch {
-        res.status(400).json({ message: 'Something went wrong'});
+        //lấy id của sp cần xóa
+        var id = req.params.id;
+        //thực hiện xóa theo id
+        await Product.findByIdAndDelete(id);
+        res.status(200).json({ message: 'Xóa thành công'});
+    } catch (errors) {
+        res.status(400).json({ error: errors });
     }
 }
