@@ -46,6 +46,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/wd18411')
 
         //router for auth API
         app.post('/register', AuthController.register);
+        app.post('/login', AuthController.login);
         app.listen(port, () => {
             console.log(`running in port ${port}`);
         })
